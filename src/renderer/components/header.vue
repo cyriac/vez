@@ -2,22 +2,21 @@
   <header class="main-header">
     <nav>
       <div>
-        {{  }}
-        <n-link to="/">Home</n-link>
-        <el-dropdown v-if="formData.fleets && formData.fleets.length > 1" trigger="click">
+        <el-dropdown v-if="formData.fleets && formData.fleets.length > 1 && $route.path == '/'" trigger="click" @command="setFleet">
           <el-button type="primary">
-            Select fleet <i class="el-icon-arrow-down el-icon--right" />
+            {{ selectText }} <i class="el-icon-arrow-down el-icon--right" />
           </el-button>
-          <el-dropdown-menu slot="dropdown" @command="setFleet">
+          <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               v-for="f in formData.fleets"
               :key="f"
-              command="f"
+              :command="f"
             >
               {{ f }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <n-link v-else to="/">Home</n-link>
       </div>
       <div>
         <nuxt-link
@@ -37,8 +36,17 @@ const storage = require('electron-json-storage')
 
 export default {
   mixins: [APIData],
+  computed: {
+    selectText () {
+      let t = 'Select fleet'
+      if (this.$store.state.activeFleet !== '' && this.$store.state.activeFleet !== null) {
+        t = this.$store.state.activeFleet
+      }
+      return t
+    }
+  },
   methods: {
-    setFleet(fleet) {
+    setFleet (fleet) {
       this.$store.commit('setFleet', fleet)
     }
   }
