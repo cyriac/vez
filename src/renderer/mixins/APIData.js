@@ -28,6 +28,7 @@ export default {
     storage.get('fleets', function(error, data) {
       if (error) throw error;
       self.form['fleets'] = data.join('\n')
+      self.$store.commit('setFleets', data)
     });
     this.mounted = true
   }

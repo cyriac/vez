@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe v-if="activeFleet !== null" width="100%" height="600px" frameborder="0" :src="frameSrc" />
+    <iframe v-if="activeFleet !== null" width="100%" height="600px" frameborder="0" :src="frameSrc" :key="frameSrc" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     },
     frameSrc () {
       let src = 'https://www.vesselfinder.com/aismap?zoom=undefined&lat=36.00&lon=-5.40&width=100%&height=600&names=true&track=false'
-      src = src + '&fleet=f679f7920157f105d039044d434e29dc&fleet_name=' + this.activeFleet
+      src = src + '&fleet=' + this.form.apikey + '&fleet_name=' + this.activeFleet
       src = src + '&fleet_timespan=1440&fleet_hide_old_positions=false&clicktoact=false&store_pos=true&ra=testingonly'
       return src
     }
@@ -26,12 +26,13 @@ export default {
       name: process.static ? 'static' : (process.server ? 'server' : 'client')
     }
   },
-  mounted () {
-    storage.get('apikey', function(error, data) {
-      if (error) throw error;
-
-      alert(JSON.stringify(data));
-    });
+  watch: {
+    formData: {
+      handler: (af) => {
+        console.log(JSON.stringify(af))
+      },
+      deep: true
+    }
   }
 }
 </script>

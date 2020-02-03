@@ -1,9 +1,13 @@
 export const state = () => ({
-  activeFleet: 'OURS'
+  activeFleet: 'OURS',
+  availableFleets: []
 })
 
 export const mutations = {
-  increment (state) {
-    state.counter++
+  setFleet (state, fleet) {
+    state.activeFleet = fleet
+  },
+  setFleets (state, fleets) {
+    state.availableFleets = fleets
   }
 }

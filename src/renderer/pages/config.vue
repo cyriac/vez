@@ -1,17 +1,22 @@
 <template>
   <div>
-    {{ formData }}
     <el-form ref="form" :model="form" label-width="120px" v-if="mounted">
       <el-form-item label="API Key">
         <el-input v-model="form.apikey"></el-input>
       </el-form-item>
       <el-form-item label="Fleets">
-        <el-input type="textarea" v-model="form.fleets"></el-input>
+        <el-input
+          type="textarea"
+          v-model="form.fleets"
+          :autosize="{ minRows: 10, maxRows: 100}"
+        >
+        </el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Save</el-button>
       </el-form-item>
     </el-form>
+    <div class="ir">{{ formData }}</div>
   </div>
 </template>
 
@@ -26,8 +31,14 @@ export default {
     onSubmit() {
       storage.set('apikey', this.formData.apikey)
       storage.set('fleets', this.formData.fleets)
-      alert('submit!');
+      alert('Save!');
     }
   }
 }
 </script>
+
+<style>
+.ir {
+  visibility: hidden;
+}
+</style>

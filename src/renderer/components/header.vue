@@ -2,17 +2,20 @@
   <header class="main-header">
     <nav>
       <div>
+        {{  }}
         <n-link to="/">Home</n-link>
-        <el-dropdown>
+        <el-dropdown v-if="formData.fleets && formData.fleets.length > 1" trigger="click">
           <el-button type="primary">
             Select fleet <i class="el-icon-arrow-down el-icon--right" />
           </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>Action 1</el-dropdown-item>
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item>Action 4</el-dropdown-item>
-            <el-dropdown-item>Action 5</el-dropdown-item>
+          <el-dropdown-menu slot="dropdown" @command="setFleet">
+            <el-dropdown-item
+              v-for="f in formData.fleets"
+              :key="f"
+              command="f"
+            >
+              {{ f }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -29,8 +32,16 @@
 </template>
 
 <script>
-export default {
+import APIData from '~/mixins/APIData.js'
+const storage = require('electron-json-storage')
 
+export default {
+  mixins: [APIData],
+  methods: {
+    setFleet(fleet) {
+      this.$store.commit('setFleet', fleet)
+    }
+  }
 }
 </script>
 
