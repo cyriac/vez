@@ -15,7 +15,7 @@
   "keywords": [],
   "author": "Cyriac Thomas <me@cyriacthomas.com>",
   "license": "MIT",
-  "homepage": "https://github.com/michalzaq12/electron-nuxt/blob/master/README.md",
+  "homepage": "https://github.com/cyriac/vez/blob/master/README.md",
   "engines": {
     "node": ">=12.8.1"
   },

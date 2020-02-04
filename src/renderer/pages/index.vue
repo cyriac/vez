@@ -1,15 +1,13 @@
 <template>
   <div>
     <!-- <div v-text="scribeText" /> -->
-    <div id="scribe">
-    </div>
+    <div id="scribe" />
   </div>
 </template>
 
 <script>
 import postscribe from 'postscribe'
 import APIData from '~/mixins/APIData.js'
-const storage = require('electron-json-storage')
 
 export default {
   mixins: [APIData],
@@ -17,11 +15,9 @@ export default {
     activeFleet () {
       return this.$store.state.activeFleet
     },
-    xvText() {
-      return `<h1>Hello PostScribe ${this.activeFleet}</h1>`
-    },
-    scribeText() {
-      let text = `
+    scribeText () {
+      /*eslint-disable */
+      const text = `
       <h1>${this.activeFleet}</h1>
       <script type="text/javascript">
           // Map appearance
@@ -39,29 +35,19 @@ export default {
       <script type="text/javascript" src="https://www.vesselfinder.com/aismap.js"><\/script>
       `
       return text
-    },
-    frameSrc () {
-      let src = 'https://www.vesselfinder.com/aismap?zoom=undefined&lat=0.0&lon=0.0&width=100%&height=600&names=true&track=false'
-      src = src + '&fleet=' + this.form.apikey + '&fleet_name=' + this.activeFleet
-      src = src + '&fleet_timespan=1440&fleet_hide_old_positions=false&clicktoact=false&store_pos=true&ra=testingonly'
-      return src
-    }
-  },
-  asyncData ({ req }) {
-    return {
-      name: process.static ? 'static' : (process.server ? 'server' : 'client')
+      /* eslint-enable */
     }
   },
   watch: {
-    "$store.state.activeFleet": {
-      handler: function (newVal, oldVal) {
+    '$store.state.activeFleet': {
+      handler (newVal, oldVal) {
         if (this.formData.apikey.length > 1 && this.formData.fleets.length > 1) {
           this.scribeEmbed()
         }
       }
     },
     formData: {
-      handler: function(newVal, oldVal) {
+      handler (newVal, oldVal) {
         const af = newVal
         if (af.apikey.length > 1 && af.fleets.length > 1) {
           this.scribeEmbed()
@@ -70,10 +56,15 @@ export default {
       deep: true
     }
   },
+  asyncData ({ req }) {
+    return {
+      name: process.static ? 'static' : (process.server ? 'server' : 'client')
+    }
+  },
   methods: {
-    scribeEmbed() {
+    scribeEmbed () {
       const div = document.querySelector('#scribe');
-      [].slice.call(div.children).forEach(function(child) {div.removeChild(child)})
+      [].slice.call(div.children).forEach(function (child) { div.removeChild(child) })
       postscribe('#scribe', this.scribeText)
     }
   }

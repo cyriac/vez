@@ -2,7 +2,11 @@
   <header class="main-header">
     <nav>
       <div>
-        <el-dropdown v-if="formData.fleets && formData.fleets.length > 1 && $route.path == '/'" trigger="click" @command="setFleet">
+        <el-dropdown
+          v-if="formData.fleets && formData.fleets.length > 1 && $route.path == '/'"
+          trigger="click"
+          @command="setFleet"
+        >
           <el-button type="primary">
             {{ selectText }} <i class="el-icon-arrow-down el-icon--right" />
           </el-button>
@@ -32,7 +36,6 @@
 
 <script>
 import APIData from '~/mixins/APIData.js'
-const storage = require('electron-json-storage')
 
 export default {
   mixins: [APIData],
