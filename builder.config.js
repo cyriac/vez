@@ -4,12 +4,15 @@ const windowsOS = {
   win: {
     icon: ICONS_DIR + 'win-icon.ico',
     publisherName: 'cyriac',
-    target: 'nsis'
+    target: 'portable'
   },
 
   nsis: {
     differentialPackage: true
-  }
+  },
+  portable: {
+    artifactName: "Vesselfinder.exe"
+  },
 }
 
 const linuxOS = {

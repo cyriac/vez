@@ -20,7 +20,9 @@ const launcher = new ElectronLauncher({
 
 const builder = new ElectronBuilder({
   cliOptions: {
-    config: path.join(__dirname, '../builder.config.js')
+    config: path.join(__dirname, '../builder.config.js'),
+    mac: ['dmg'],
+    win: ['portable']
   }
 })
 
