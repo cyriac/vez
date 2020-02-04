@@ -23,8 +23,9 @@ export default {
           // Map appearance
           var width="100%";         // width in pixels or percentage
           var height="600";         // height in pixels
-          var latitude="36.00";     // center latitude (decimal degrees)
-          var longitude="-5.40";    // center longitude (decimal degrees)
+          var zoom="3";
+          var latitude="20.6";     // center latitude (decimal degrees)
+          var longitude="56.40";    // center longitude (decimal degrees)
           var names=true;           // always show ship names (defaults to false)
 
           // Fleet tracking

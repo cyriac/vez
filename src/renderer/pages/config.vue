@@ -29,7 +29,7 @@ export default {
     onSubmit () {
       storage.set('apikey', this.formData.apikey)
       storage.set('fleets', this.formData.fleets)
-      alert('Save!')
+      alert('Saved!')
     }
   }
 }

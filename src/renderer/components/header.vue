@@ -12,7 +12,7 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
-              v-for="f in formData.fleets"
+              v-for="f in fleetList"
               :key="f"
               :command="f"
             >
@@ -40,6 +40,9 @@ import APIData from '~/mixins/APIData.js'
 export default {
   mixins: [APIData],
   computed: {
+    fleetList () {
+      return this.formData.fleets
+    },
     selectText () {
       let t = 'Select fleet'
       if (this.$store.state.activeFleet !== '' && this.$store.state.activeFleet !== null) {

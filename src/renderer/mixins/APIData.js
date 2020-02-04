@@ -12,9 +12,11 @@ export default {
   },
   computed: {
     formData () {
+      let fleets = this.form.fleets.split('\n')
+      fleets = fleets.filter(f => f.length > 1)
       const form = {
         apikey: this.form.apikey,
-        fleets: this.form.fleets.split('\n')
+        fleets
       }
       return form
     }
