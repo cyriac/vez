@@ -21,19 +21,24 @@ export default {
       return form
     }
   },
+  methods: {
+    pullAPIdata () {
+      const self = this
+      storage.get('apikey', function (error, data) {
+        if (error) throw error
+        if (data.length > 1) {
+          self.form.apikey = data
+        }
+      })
+      storage.get('fleets', function (error, data) {
+        if (error) throw error
+        self.form.fleets = data.join('\n')
+        self.$store.commit('setFleets', data)
+      })
+    }
+  },
   mounted () {
-    const self = this
-    storage.get('apikey', function (error, data) {
-      if (error) throw error
-      if (data.length > 1) {
-        self.form.apikey = data
-      }
-    })
-    storage.get('fleets', function (error, data) {
-      if (error) throw error
-      self.form.fleets = data.join('\n')
-      self.$store.commit('setFleets', data)
-    })
+    this.pullAPIdata()
     this.mounted = true
   }
 }
