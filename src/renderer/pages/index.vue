@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ frameSrc }}
+    <!-- <div v-text="scribeText" /> -->
     <div id="scribe">
     </div>
   </div>
@@ -17,14 +17,18 @@ export default {
     activeFleet () {
       return this.$store.state.activeFleet
     },
+    xvText() {
+      return `<h1>Hello PostScribe ${this.activeFleet}</h1>`
+    },
     scribeText() {
       let text = `
+      <h1>${this.activeFleet}</h1>
       <script type="text/javascript">
           // Map appearance
           var width="100%";         // width in pixels or percentage
           var height="600";         // height in pixels
-          var latitude="0.00";     // center latitude (decimal degrees)
-          var longitude="0.00";    // center longitude (decimal degrees)
+          var latitude="36.00";     // center latitude (decimal degrees)
+          var longitude="-5.40";    // center longitude (decimal degrees)
           var names=true;           // always show ship names (defaults to false)
 
           // Fleet tracking
@@ -49,16 +53,29 @@ export default {
     }
   },
   watch: {
+    "$store.state.activeFleet": {
+      handler: function (newVal, oldVal) {
+        if (this.formData.apikey.length > 1 && this.formData.fleets.length > 1) {
+          this.scribeEmbed()
+        }
+      }
+    },
     formData: {
       handler: function(newVal, oldVal) {
         const af = newVal
         if (af.apikey.length > 1 && af.fleets.length > 1) {
-          alert(JSON.stringify(af))
-          postscribe('#scribe', this.scribeText);
+          this.scribeEmbed()
         }
       },
       deep: true
     }
   },
+  methods: {
+    scribeEmbed() {
+      const div = document.querySelector('#scribe');
+      [].slice.call(div.children).forEach(function(child) {div.removeChild(child)})
+      postscribe('#scribe', this.scribeText)
+    }
+  }
 }
 </script>

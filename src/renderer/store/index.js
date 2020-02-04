@@ -1,5 +1,5 @@
 export const state = () => ({
-  activeFleet: 'OURS',
+  activeFleet: '',
   availableFleets: []
 })
 
