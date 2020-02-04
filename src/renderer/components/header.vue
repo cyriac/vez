@@ -1,9 +1,9 @@
 <template>
   <header class="main-header">
     <nav>
-      <div>
+      <div v-if="$route.path == '/'">
         <el-dropdown
-          v-if="formData.fleets && formData.fleets.length > 1 && $route.path == '/'"
+          v-if="formData.fleets && formData.fleets.length > 1"
           trigger="click"
           @command="setFleet"
         >
@@ -20,7 +20,9 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <n-link v-else to="/">Home</n-link>
+      </div>
+      <div v-if="formData.fleets && formData.fleets.length > 1 && $route.path !== '/'">
+        <n-link to="/">Home</n-link>
       </div>
       <div>
         <nuxt-link

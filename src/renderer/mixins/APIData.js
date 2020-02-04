@@ -6,7 +6,7 @@ export default {
       form: {
         apikey: '',
         fleets: '',
-        mounted: false
+        mounted: true
       }
     }
   },
@@ -28,12 +28,19 @@ export default {
         if (error) throw error
         if (data.length > 1) {
           self.form.apikey = data
+        } else {
+          self.form.apikey = ''
         }
       })
       storage.get('fleets', function (error, data) {
         if (error) throw error
-        self.form.fleets = data.join('\n')
-        self.$store.commit('setFleets', data)
+        try {
+          self.form.fleets = data.join('\n')
+          self.$store.commit('setFleets', data)
+        } catch(err) {
+          self.form.fleets = ''
+          self.$store.commit('setFleets', [])
+        }
       })
     }
   },

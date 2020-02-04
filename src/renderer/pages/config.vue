@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form v-if="mounted" ref="form" :model="form" label-width="120px">
+    <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="API Key">
         <el-input v-model="form.apikey" />
       </el-form-item>
