@@ -23,7 +23,9 @@ export default {
     const self = this
     storage.get('apikey', function (error, data) {
       if (error) throw error
-      self.form.apikey = data
+      if (data.length > 1) {
+        self.form.apikey = data
+      }
     })
     storage.get('fleets', function (error, data) {
       if (error) throw error
