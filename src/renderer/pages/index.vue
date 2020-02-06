@@ -2,6 +2,19 @@
   <div>
     <!-- <div v-text="scribeText" /> -->
     <div id="scribe" />
+    <el-row :gutter="20">
+      <el-col :span="6" :offset="9">
+        <el-alert
+          v-if="activeFleet.length == 0"
+          title="Select a fleet"
+          type="warning"
+          effect="dark"
+          show-icon
+          center
+          :closable="false">
+        </el-alert>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -26,12 +39,12 @@ export default {
           var zoom="3";
           var latitude="20.6";     // center latitude (decimal degrees)
           var longitude="56.40";    // center longitude (decimal degrees)
-          var names=true;           // always show ship names (defaults to false)
+          var names=${this.form.show_names};           // always show ship names (defaults to false)
 
           // Fleet tracking
           var fleet="${this.form.apikey}"; // your personal Fleet key (displayed in your User Profile)
           var fleet_name="${this.activeFleet}"; // display particular fleet from your fleet list
-          var fleet_timespan="1440"; // maximum age in minutes of the displayed ship positions
+          var fleet_timespan="${this.form.fleet_timespan}"; // maximum age in minutes of the displayed ship positions
       <\/script>
       <script type="text/javascript" src="https://www.vesselfinder.com/aismap.js"><\/script>
       `
@@ -66,7 +79,9 @@ export default {
     scribeEmbed () {
       const div = document.querySelector('#scribe');
       [].slice.call(div.children).forEach(function (child) { div.removeChild(child) })
-      postscribe('#scribe', this.scribeText)
+      if (this.activeFleet.length > 0) {
+        postscribe('#scribe', this.scribeText)
+      }
     }
   }
 }
