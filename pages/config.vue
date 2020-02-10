@@ -35,7 +35,7 @@
 
 <script>
 import APIData from '~/mixins/APIData.js'
-const storage = require('electron-json-storage')
+const storage = require('local-storage-json')
 
 export default {
   mixins: [APIData],
